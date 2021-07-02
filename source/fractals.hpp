@@ -27,5 +27,13 @@ public:
     ~Mandlebrot();
 };
 
+class Sfx : public Fractal
+{
+public:
+    Sfx();
+    std::complex<double> nextpos(std::complex<double> rec,std::complex<double> point);
+    void draworbit(std::complex<double> rec,std::complex<double> point);
+    ~Sfx();
+};
 
 

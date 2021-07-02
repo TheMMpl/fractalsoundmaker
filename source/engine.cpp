@@ -5,16 +5,19 @@ Engine::Engine()
 {
     initWindow();
     curr=new Mandlebrot();
+    //curr=new Sfx();
     state=0;
-    //startingpoint=new std::complex<double>(0.274,0.528);
-    startingpoint=new std::complex<double>(-0.1,0.8);
+    startingpoint=new std::complex<double>(0.274,0.528);
     //startingpoint=new std::complex<double>(-0.1,0.8);
+   // startingpoint=new std::complex<double>(1.2,-0.4);
+    //startingpoint=new std::complex<double>(1.6,-0.3);
+    //startingpoint=new std::complex<double>(1.6,-0.5);
     sm=new synth(curr);
 }
 
 void Engine::initWindow()
 {
-    window=new sf::RenderWindow(sf::VideoMode(800,600),"ziuziu");
+    window=new sf::RenderWindow(sf::VideoMode(1280,720),"ziuziu");
     window->setFramerateLimit(60);
 }
 
@@ -63,24 +66,40 @@ void Engine::events()
 
 void Engine::run()
 {
+    //int i=0;
     while (window->isOpen())
     {
         events();
         window->clear();
-        curr->draworbit(0,*startingpoint);
+        //if(i==0)
+        curr->draworbit(*startingpoint,*startingpoint);
         window->draw(*curr);
         window->display();
+        //i++;
     }
 }
 void Engine::sound()
 {
-    std::cout<<"halo1";
+    playing.pause();
     sm->genoutput();
-    std::cout<<"halo2";
-    FILE * f = wavfile_open("sound.wav");
-    if(!f)std::cout<<"nieziu!"<<std::endl;
-    wavfile_write(f,sm->waveform,WAVFILE_SAMPLES_PER_SECOND);
-	wavfile_close(f);
+    if(fswitch)
+    {
+        sa++;
+        std::cout<<"halo2";
+        std::string name="sound"+std::to_string(sa)+".wav";
+        const char *fname=name.c_str();
+        FILE * f = wavfile_open(fname);
+        if(!f)std::cout<<"nieziu!"<<std::endl;
+        wavfile_write(f,sm->waveform,WAVFILE_SAMPLES_PER_SECOND);
+	    wavfile_close(f);
+    }
+    else
+    {
+        buffer.loadFromSamples(sm->waveform,WAVFILE_SAMPLES_PER_SECOND,1,WAVFILE_SAMPLES_PER_SECOND);
+        playing.setBuffer(buffer);
+        playing.setLoop(true);
+        playing.play();
+    }
     std::cout<<"halo";
 }
 

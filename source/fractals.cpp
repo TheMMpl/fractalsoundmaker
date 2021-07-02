@@ -47,6 +47,46 @@ std::complex<double> Mandlebrot::nextpos(std::complex<double> rec,std::complex<d
 {
     return rec*rec+point;
 }
+
+double rqrare(std::complex<double> c)
+{
+    return c.real()*c.real();
+}
+double imqrare(std::complex<double> c)
+{
+    return c.imag()*c.imag();
+}
+
+std::complex<double> Sfx::nextpos(std::complex<double> rec,std::complex<double> point)
+{
+    std::complex<double> c(rqrare(point),imqrare(point));
+    return rec*(rqrare(rec)+imqrare(rec))-(rec*c);
+}
+void Sfx::draworbit(std::complex<double> rec,std::complex<double> point)
+{
+    orbit.clear();
+    for (int i=0;i<orbit_samples;i++)
+    {
+        //std::cout<<"halo3";
+        rec=nextpos(rec,point);
+        orbit.push_back(rec);
+        if(abs(rec)>32) break;
+    }
+    for(size_t i=0;i<orbit.size();i++)
+    {
+        std::cout<<orbit[i].real()<<" "<<orbit[i].imag()<<std::endl;
+    }
+    std::cout<<std::endl;
+}
+Sfx::Sfx()
+{
+    id=1;
+    orbit_samples=441;
+}
+Sfx::~Sfx()
+{
+
+}
 Mandlebrot::~Mandlebrot()
 {
 }
