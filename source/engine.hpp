@@ -3,14 +3,8 @@
 #include "pch.hpp"
 #include "fractals.hpp"
 #include "soundmaker.hpp"
-
-class Params
-{
-public:
-    //char synthtype;
-    sf::Vector2u size;
-    sf::ContextSettings settings;
-};
+#include "gui.hpp"
+#include "settings.hpp"
 
 class Engine
 {
@@ -18,15 +12,15 @@ private:
     int sa=0;
     sf::RenderWindow* window;
     sf::Event ev;
-    Fractal* curr;
+    Fractal* fractals[2];
     bool state;
-    bool fswitch=false;
-    std::string real;
-    std::string imag;
-    std::complex<double>* startingpoint;
+    sf::Mouse mouse;
     sf::SoundBuffer buffer;
     sf::Sound playing;
+    sf::Font* font;
     synth *sm;
+    Button* gui[6];
+    Params* settings;
     void initWindow();
 public:
     Engine(/* args */);

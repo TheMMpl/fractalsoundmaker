@@ -12,5 +12,6 @@ protected:
 public:
     short waveform[44100];  
     synth(Fractal* f);
+    void setfractal(Fractal* f);
     void genoutput();
 };

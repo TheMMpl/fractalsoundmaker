@@ -26,3 +26,7 @@ void synth::genoutput()
         //std::cout<<"ziu3"<<std::endl;
     }
 }
+void synth::setfractal(Fractal* f)
+{
+    fractal=f;
+}

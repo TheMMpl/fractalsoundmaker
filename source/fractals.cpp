@@ -72,11 +72,11 @@ void Sfx::draworbit(std::complex<double> rec,std::complex<double> point)
         orbit.push_back(rec);
         if(abs(rec)>32) break;
     }
-    for(size_t i=0;i<orbit.size();i++)
+   /* for(size_t i=0;i<orbit.size();i++)
     {
         std::cout<<orbit[i].real()<<" "<<orbit[i].imag()<<std::endl;
     }
-    std::cout<<std::endl;
+    std::cout<<std::endl;*/
 }
 Sfx::Sfx()
 {
