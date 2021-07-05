@@ -14,6 +14,7 @@ public:
     int buttonid;
     std::complex<double> point;
     bool play;
+    bool changed;
 public:
     Params();
     ~Params();

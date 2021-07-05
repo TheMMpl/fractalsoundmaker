@@ -10,7 +10,7 @@ protected:
     int samples_per_second;
     int volume;       
 public:
-    short waveform[44100];  
+    short waveform[SOUNDSIZE];  
     synth(Fractal* f);
     void setfractal(Fractal* f);
     void genoutput();

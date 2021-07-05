@@ -6,9 +6,10 @@ class Fractal : public sf::Drawable
 
 protected:
     int id;
-    int orbit_samples;  
+    int orbit_samples;
 public:
     std::vector<std::complex<double> > orbit;
+    std::complex<double> recpoint;
     Fractal();
     virtual std::complex<double> nextpos(std::complex<double> rec,std::complex<double> point)=0;
     virtual void draworbit(std::complex<double> rec,std::complex<double> point)=0;

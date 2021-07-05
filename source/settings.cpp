@@ -9,6 +9,7 @@ Params::Params()
     buttonid=0;
     point=0;
     play=0;
+    changed=0;
 }
 
 Params::~Params(){}

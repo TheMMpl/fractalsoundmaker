@@ -102,6 +102,7 @@ void PushButton::onSelected()
     settings->point=std::complex<double>(std::stod(settings->real),std::stod(settings->imag));
     settings->real="";
     settings->imag="";
+    settings->changed=true;
 }
 bool PushButton::selectable()
 {

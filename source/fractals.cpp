@@ -11,7 +11,7 @@ void Fractal::draw(sf::RenderTarget& target, sf::RenderStates states) const
     sf::Vector2u screen=target.getSize();
     for(size_t it=0;it<orbit.size();it++)
     {
-        orb[it].position=sf::Vector2f(orbit[it].real()*100+(screen.x/2),orbit[it].imag()*100+(screen.y/2));
+        orb[it].position=sf::Vector2f(orbit[it].real()*200+(screen.x/2),orbit[it].imag()*200+(screen.y/2));
         orb[it].color=sf::Color::Red;
     }
     target.draw(orb,states);
@@ -20,6 +20,7 @@ Mandlebrot::Mandlebrot()
 {
     id=1;
     orbit_samples=441;
+    recpoint=std::complex<double>(0,0);
 }
 void Mandlebrot::draworbit(std::complex<double> rec,std::complex<double> point)
 {
@@ -35,6 +36,7 @@ void Mandlebrot::draworbit(std::complex<double> rec,std::complex<double> point)
         orbit.push_back(rec);
         if(abs(rec)>32) break;
     }
+    recpoint=orbit[orbit.size()-1];
     //orbit.push_back(orbit[0]);
     /*for(size_t i=0;i<orbit.size();i++)
     {
@@ -72,6 +74,7 @@ void Sfx::draworbit(std::complex<double> rec,std::complex<double> point)
         orbit.push_back(rec);
         if(abs(rec)>32) break;
     }
+    recpoint=orbit[orbit.size()-1];
    /* for(size_t i=0;i<orbit.size();i++)
     {
         std::cout<<orbit[i].real()<<" "<<orbit[i].imag()<<std::endl;
@@ -82,6 +85,7 @@ Sfx::Sfx()
 {
     id=1;
     orbit_samples=441;
+    recpoint=std::complex<double>(0,0);
 }
 Sfx::~Sfx()
 {

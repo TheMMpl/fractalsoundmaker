@@ -11,7 +11,7 @@ PCH_SRC = source/pch.hpp
 #PCH_HEADERS = 
 PCH_OUT = source/pch.hpp.gch
 
-NAME = fse
+NAME = fsm
 
 all: $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME) $(SFML)
