@@ -75,16 +75,40 @@ void Sfx::draworbit(std::complex<double> rec,std::complex<double> point)
     }
     std::cout<<std::endl;*/
 }
+
+std::complex<double> Chirkov::nextpos(std::complex<double> rec,std::complex<double> point)
+{
+    double im=rec.imag()+point.imag()*std::sin(rec.real());
+    double re=rec.real()+point.real()*im;
+   return std::complex<double>(re,im);
+}
+
+void Chirkov::draworbit(std::complex<double> rec,std::complex<double> point)
+{
+    orbit.clear();
+    for (int i=0;i<orbit_samples;i++)
+    {
+        rec=nextpos(rec,point);
+        orbit.push_back(rec);
+        if(abs(rec)>32) break;
+    }
+    recpoint=orbit[orbit.size()-1];
+}
+
 Sfx::Sfx()
 {
     id=1;
     orbit_samples=441;
     recpoint=std::complex<double>(0,0);
 }
-Sfx::~Sfx()
+Chirkov::Chirkov()
 {
+    id=2;
+    orbit_samples=441;
+    recpoint=std::complex<double>(0,0);
+}
 
-}
-Mandlebrot::~Mandlebrot()
-{
-}
+
+Sfx::~Sfx(){}
+Mandlebrot::~Mandlebrot(){}
+Chirkov::~Chirkov(){}

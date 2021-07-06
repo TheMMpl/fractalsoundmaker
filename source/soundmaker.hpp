@@ -8,7 +8,8 @@ class synth
 protected:
     Fractal* fractal;
     int samples_per_second;
-    int volume;       
+    int volume;
+    std::vector<std::complex<double> > orbit;
 public:
     short waveform[SOUNDSIZE];  
     synth(Fractal* f);

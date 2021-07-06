@@ -9,29 +9,37 @@ synth::synth(Fractal* f)
 
 void synth::genoutput()
 {
+    orbit=fractal->orbit;
+    for(int i=0;i<orbit.size();i++)
+    {
+        if(abs(orbit[i])>2)
+        {
+            orbit[i]*=2/abs(orbit[i]);
+        }
+    }
     int sampledist=samples_per_second/fractal->orbit.size(); 
     for(int i=0;i<SOUNDSIZE;i+=2)
     {
         if(i%sampledist==0)
         {
-            waveform[i]=fractal->orbit[i/(sampledist*1)].real();
+            waveform[i]=orbit[i/(sampledist*1)].real();
         }
         else {
             double mp=1/(i%sampledist);
             double mv = (1-cos(mp*M_PI))/2;
-            waveform[i]=volume*(fractal->orbit[i/sampledist].real()*(1-mv)+fractal->orbit[i/sampledist+1].real()*mv);
+            waveform[i]=volume*(orbit[i/sampledist].real()*(1-mv)+orbit[i/sampledist+1].real()*mv);
         }
     }
     for (int i = 1; i <SOUNDSIZE; i+=2)
     {
         if(i%sampledist==1)
         {
-            waveform[i]=fractal->orbit[i/sampledist].imag();
+            waveform[i]=orbit[i/sampledist].imag();
         }
         else  {
             double mp=1/(i%sampledist);
             double mv = (1-cos(mp*M_PI))/2;
-            waveform[i]=volume*(fractal->orbit[i/sampledist].imag()*(1-mv)+fractal->orbit[i/sampledist+1].imag()*mv);
+            waveform[i]=volume*(orbit[i/sampledist].imag()*(1-mv)+orbit[i/sampledist+1].imag()*mv);
         }
     }
 }

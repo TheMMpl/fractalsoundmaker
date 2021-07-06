@@ -37,4 +37,13 @@ public:
     ~Sfx();
 };
 
+class Chirkov : public Fractal
+{
+public:
+    Chirkov();
+    std::complex<double> nextpos(std::complex<double> rec,std::complex<double> point);
+    void draworbit(std::complex<double> rec,std::complex<double> point);
+    ~Chirkov();
+};
+
 

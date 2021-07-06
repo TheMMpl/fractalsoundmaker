@@ -22,6 +22,13 @@ vec2 sfx(vec2 rec,vec2 point)
     return rec*(length(rec)*length(rec))-cmult(rec,c);
 }
 
+vec2 chirkov(vec2 rec,vec2 point)
+{
+    rec.y+=point.y*sin(rec.x);
+    rec.x+=point.x*rec.y;
+    return rec;
+}
+
 void main()
 {
     vec2 pos=gl_FragCoord.xy-(res.xy*0.5);
@@ -31,7 +38,8 @@ void main()
     for(int i=0;i<200;i++)
     {
         if(fractalid==0)rec=mandlebrot(rec,pos);
-        else rec=sfx(rec,pos);
+        else if(fractalid==1)rec=sfx(rec,pos);
+        else rec=chirkov(rec,pos);
         if(length(rec)>32)
         gl_FragColor=vec4(1.0,1.0,1.0,1.0);
     }

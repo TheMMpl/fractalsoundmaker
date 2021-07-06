@@ -12,7 +12,7 @@ private:
     int sa=0;
     sf::RenderWindow* window;
     sf::Event ev;
-    Fractal* fractals[2];
+    Fractal* fractals[3];
     bool state;
     sf::Mouse mouse;
     sf::SoundBuffer buffer;

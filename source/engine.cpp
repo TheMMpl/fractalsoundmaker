@@ -7,6 +7,7 @@ Engine::Engine()
     initWindow();
     fractals[0]=new Mandlebrot();
     fractals[1]=new Sfx();
+    fractals[2]=new Chirkov();
     font=new sf::Font();
     font->loadFromFile("ASCII.ttf");
     sf::Vector2f guiedge=window->mapPixelToCoords(sf::Vector2i(window->getSize()-sf::Vector2u(350,100)));
@@ -79,6 +80,7 @@ void Engine::events()
             if(!butttonpressed)
             {
                 settings->point=ptopoint(m);
+                settings->changed=true;
             }
             break;
 
@@ -96,13 +98,16 @@ void Engine::run()
         events();
         window->clear();
         window->draw(rect,&shader);
-        /*if(!settings->changed)
+        if(settings->changed)
         {
-            fractals[settings->fractalid]->draworbit(fractals[settings->fractalid]->recpoint,settings->point);
+            fractals[settings->fractalid]->draworbit(settings->point,settings->point);
             settings->changed=false;
         } 
-        else */
-        fractals[settings->fractalid]->draworbit(settings->point,settings->point);
+        else
+        {
+            fractals[settings->fractalid]->draworbit(fractals[settings->fractalid]->recpoint,settings->point);
+        }
+        
         
         window->draw(*fractals[settings->fractalid]);
         for(int i=0;i<6;i++)

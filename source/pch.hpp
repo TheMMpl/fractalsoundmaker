@@ -17,5 +17,5 @@
 #include <cstring>
 
 #define M_PI 3.1415926535897932384
-#define FRACTALS 1
+#define FRACTALS 2
 #define SOUNDSIZE 44100
