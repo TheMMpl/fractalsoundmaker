@@ -32,7 +32,7 @@ void main()
     {
         if(fractalid==0)rec=mandlebrot(rec,pos);
         else rec=sfx(rec,pos);
-        if(length(rec)>1000)
+        if(length(rec)>32)
         gl_FragColor=vec4(1.0,1.0,1.0,1.0);
     }
 }

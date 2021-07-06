@@ -63,7 +63,6 @@ void Engine::events()
             break;
 
         case sf::Event::MouseButtonPressed:
-            
             for(int i=0;i<6;i++)
             {
                 if(gui[i]->selectable()&&gui[i]->isSelected(m))
@@ -86,12 +85,12 @@ void Engine::events()
         default:
             break;
         }
+ 
     }
 }
 
 void Engine::run()
 {
-    //int i=0;
     while (window->isOpen())
     {
         events();
@@ -110,6 +109,7 @@ void Engine::run()
         {
             window->draw(*gui[i]);
         }
+        window->display();
     }
 }
 void Engine::sound()
@@ -140,4 +140,5 @@ std::complex<double> Engine::ptopoint(sf::Vector2f mouse)
 
 Engine::~Engine()
 {
+    
 }
