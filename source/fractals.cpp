@@ -1,8 +1,7 @@
 #include "fractals.hpp"
 
 Fractal::Fractal(){id=0;}
-//void Fractal::draworbit(std::complex<double> rec,std::complex<double> point){}
-//std::complex<double> nextpos(std::complex<double> rec,std::complex<double> point){return 0;}
+
 Fractal::~Fractal(){}
 
 void Fractal::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -24,14 +23,9 @@ Mandlebrot::Mandlebrot()
 }
 void Mandlebrot::draworbit(std::complex<double> rec,std::complex<double> point)
 {
-    //std::complex<float> r=rec;
-    //std::complex<float> p=point;
-    //std::cout<<"halo1";
     orbit.clear();
-    //std::cout<<"halo2";
     for (int i=0;i<orbit_samples;i++)
     {
-        //std::cout<<"halo3";
         rec=nextpos(rec,point);
         orbit.push_back(rec);
         if(abs(rec)>32) break;

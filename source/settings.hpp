@@ -15,6 +15,8 @@ public:
     std::complex<double> point;
     bool play;
     bool changed;
+    float windowx;
+    float windowy;
 public:
     Params();
     ~Params();

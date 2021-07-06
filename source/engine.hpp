@@ -21,12 +21,15 @@ private:
     synth *sm;
     Button* gui[6];
     Params* settings;
+    sf::Shader shader;
+    sf::RectangleShape rect;
     void initWindow();
 public:
     Engine(/* args */);
     void run();
     void events();
     void sound();
+    std::complex<double> ptopoint(sf::Vector2f mouse);
     ~Engine();
 };
 

@@ -10,6 +10,8 @@ Params::Params()
     point=0;
     play=0;
     changed=0;
+    windowx=1280;
+    windowy=720;
 }
 
 Params::~Params(){}

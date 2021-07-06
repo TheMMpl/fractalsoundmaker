@@ -3,8 +3,8 @@
 
 Engine::Engine()
 {
-    initWindow();
     settings=new Params();
+    initWindow();
     fractals[0]=new Mandlebrot();
     fractals[1]=new Sfx();
     font=new sf::Font();
@@ -16,7 +16,6 @@ Engine::Engine()
     gui[3]=new PushButton(sf::Vector2f(80,20),guiedge+sf::Vector2f(3*18+2*70,15),font,"calculate",settings,3);
     gui[4]=new PlayButton(sf::Vector2f(70,20),guiedge+sf::Vector2f(18,50),font,"play",settings,1);
     gui[5]=new FractalEnum(sf::Vector2f(70,20),guiedge+sf::Vector2f(2*18+70,50),font,"next",settings,1);
-    //curr=new Sfx();
     state=0;
     settings->point=std::complex<double>(0.274,0.528);
     //startingpoint=new std::complex<double>(-0.1,0.8);
@@ -24,11 +23,17 @@ Engine::Engine()
     //startingpoint=new std::complex<double>(1.6,-0.3);
     //startingpoint=new std::complex<double>(1.6,-0.5);
     sm=new synth(fractals[0]);
+    if(!shader.loadFromFile("source/vertex.glsl","source/fragment.glsl"))
+    std::cout<<"tywala"<<std::endl;
+    shader.setUniform("res",sf::Glsl::Vec2(settings->windowx,settings->windowy));
+    shader.setUniform("fractalid",settings->fractalid);
+    rect.setPosition(0,0);
+    rect.setSize(window->mapPixelToCoords(sf::Vector2i(window->getSize())));
 }
 
 void Engine::initWindow()
 {
-    window=new sf::RenderWindow(sf::VideoMode(1280,720),"FSM");
+    window=new sf::RenderWindow(sf::VideoMode(settings->windowx,settings->windowy),"FSM");
     window->setFramerateLimit(60);
 }
 
@@ -37,6 +42,7 @@ void Engine::events()
     while (window->pollEvent(ev))
     {
         sf::Vector2f m=sf::Vector2f(window->mapPixelToCoords(mouse.getPosition(*window)));
+        bool butttonpressed=false;
         switch (ev.type)
         {
         case sf::Event::Closed:
@@ -57,20 +63,24 @@ void Engine::events()
             break;
 
         case sf::Event::MouseButtonPressed:
+            
             for(int i=0;i<6;i++)
             {
-                //std::cout<<m.x<<" "<<m.y<<std::endl;
                 if(gui[i]->selectable()&&gui[i]->isSelected(m))
                 {
                     settings->buttonid=i;
                     gui[i]->onSelected();
+                    butttonpressed=true;
                 }
             }
-           // std::cout<<gui[1]->selectable()<<std::endl;
-            //std::cout<<"akrualny guzik: "<<settings->buttonid<<std::endl;
             if(settings->play)sound();
             else playing.pause();
             sm->setfractal(fractals[settings->fractalid]);
+            shader.setUniform("fractalid",settings->fractalid);
+            if(!butttonpressed)
+            {
+                settings->point=ptopoint(m);
+            }
             break;
 
         default:
@@ -86,22 +96,20 @@ void Engine::run()
     {
         events();
         window->clear();
-        if(!settings->changed)
+        window->draw(rect,&shader);
+        /*if(!settings->changed)
         {
             fractals[settings->fractalid]->draworbit(fractals[settings->fractalid]->recpoint,settings->point);
             settings->changed=false;
         } 
-        else fractals[settings->fractalid]->draworbit(settings->point,settings->point);
+        else */
+        fractals[settings->fractalid]->draworbit(settings->point,settings->point);
         
         window->draw(*fractals[settings->fractalid]);
         for(int i=0;i<6;i++)
         {
             window->draw(*gui[i]);
-            //std::cout<<"ziu ";
         }
-        //std::cout<<std::endl;
-        window->display();
-        //i++;
     }
 }
 void Engine::sound()
@@ -123,7 +131,11 @@ void Engine::sound()
         playing.setBuffer(buffer);
         playing.setLoop(true);
         playing.play();
-    //std::cout<<"halo";
+}
+
+std::complex<double> Engine::ptopoint(sf::Vector2f mouse)
+{
+    return std::complex<double>((mouse.x-(settings->windowx/2))/200,(mouse.y-settings->windowy/2)/200);
 }
 
 Engine::~Engine()
